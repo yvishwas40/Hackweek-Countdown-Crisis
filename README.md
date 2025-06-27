@@ -33,12 +33,3 @@ This is a Next.js application that displays a live countdown timer to the end of
 Made with ❤️ for COSC Hackweek  
 By yvishwas40
 
----
-
-**Replace:**
-- `your-vercel-deployment` → with your actual Vercel deployment URL
-- `your-username` → with your GitHub username
-- Add/change screenshots in `public/screenshots/`
-- Update author name as needed
-
----
