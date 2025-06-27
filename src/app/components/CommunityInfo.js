@@ -5,13 +5,27 @@ export default function CommunityInfo() {
 
   useEffect(() => {
     const fetchMessage = async () => {
-      const res = await fetch('/cosc.json');
-      const data = await res.json();
-      setData(data);
+      try {
+        const res = await fetch('/cosc.json');
+        const jsonData = await res.json();
+        setData(jsonData);
+      } catch (e) {
+        // Optionally handle error
+        setData(null);
+      }
     };
 
     fetchMessage();
   }, []);
+
+  // Handle loading state and avoid accessing properties of null/undefined
+  if (!data) {
+    return (
+      <div className="text-center mb-6">
+        <p>Loading community info...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="text-center mb-6">

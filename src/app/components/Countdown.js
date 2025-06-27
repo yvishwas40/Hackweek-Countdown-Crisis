@@ -1,35 +1,31 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 const getRemainingTime = () => {
   const now = new Date();
-  const hackweekEnd = new Date('2025-06-29T23:59:59');
+  const hackweekEnd = new Date("2025-06-29T23:59:59Z");
   const diff = Math.max(0, Math.floor((hackweekEnd - now) / 1000));
-  
   const days = Math.floor(diff / (24 * 60 * 60));
   const hours = Math.floor((diff % (24 * 60 * 60)) / (60 * 60));
   const minutes = Math.floor((diff % (60 * 60)) / 60);
   const seconds = diff % 60;
-  
   return { days, hours, minutes, seconds };
 };
 
 export default function Countdown() {
-  const [remaining, setRemaining] = useState(getRemainingTime());
-  const [mounted, setMounted] = useState(false);
+  const [remaining, setRemaining] = useState(null);
+  const [hasMounted, setHasMounted] = useState(false);
+
   useEffect(() => {
+    setHasMounted(true);
+    setRemaining(getRemainingTime());
     const interval = setInterval(() => {
       setRemaining(getRemainingTime());
     }, 1000);
-
     return () => clearInterval(interval);
   }, []);
-  
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
-  if (!remaining || !mounted) {
-    return <div></div>;
+  if (!hasMounted || !remaining) {
+    return <div className="text-center text-white">Loading countdown...</div>;
   }
 
   return (
